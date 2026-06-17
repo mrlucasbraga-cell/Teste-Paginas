@@ -41,20 +41,11 @@
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-white);
-            background-color: var(--bg);
+            /* Adicionado o background.png repetido de forma suave com overlay escuro */
+            background: linear-gradient(180deg, rgba(3, 10, 16, 0.95) 0%, rgba(5, 16, 26, 0.98) 100%), url('background.png');
+            background-attachment: fixed;
             overflow-x: hidden;
             position: relative;
-        }
-
-        /* Textura sutil de fundo para simular o background premium da imagem */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(rgba(189, 160, 109, 0.03) 1px, transparent 0px);
-            background-size: 24px 24px;
-            pointer-events: none;
-            z-index: 1;
         }
 
         .container {
@@ -74,42 +65,62 @@
             font-weight: 500;
         }
 
-        /* --- HERO SECTION COM ARCO INFERIOR --- */
+        /* --- HERO SECTION COM RECORTE E IMAGEM DA ESTÁTUA --- */
         .hero-outer {
             position: relative;
             background: linear-gradient(180deg, #02070b 0%, #061524 100%);
-            padding-bottom: 140px;
-            /* Recorte convexo inferior simulando o design da imagem */
+            padding-bottom: 100px;
+            /* Recorte convexo inferior idêntico à imagem de referência */
             clip-path: ellipse(140% 100% at 50% 0%);
         }
 
-        /* Brilho dourado atrás do logo/estátua */
+        /* Iluminação radial de fundo no topo */
         .hero-outer::after {
             content: "";
             position: absolute;
-            top: 20%;
-            left: 50%;
+            top: 30%;
+            left: 30%;
             transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(189, 160, 109, 0.08) 0%, transparent 70%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(189, 160, 109, 0.06) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .hero-content {
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 50px;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        .hero-image-box {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image-box img {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            object-fit: contain;
+            animation: floatStatue 6s ease-in-out infinite;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.7));
+        }
+
+        .hero-text-box {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding-top: 60px;
+            align-items: flex-start;
         }
 
         .main-logo-wrapper {
-            margin-bottom: 20px;
-            position: relative;
+            margin-bottom: 15px;
         }
 
-        /* Espaço para o monograma estilizado IM / LB */
         .main-logo {
             font-family: 'Cormorant Garamond', serif;
             font-size: 4.5rem;
@@ -122,10 +133,11 @@
         }
 
         .hero-title {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             color: var(--text-white);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             letter-spacing: 1px;
+            line-height: 1.1;
         }
 
         .hero-subtitle {
@@ -133,18 +145,24 @@
             text-transform: uppercase;
             letter-spacing: 4px;
             color: var(--gold);
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             font-weight: 500;
         }
 
         .hero-description {
-            font-size: 1.2rem;
-            max-width: 600px;
+            font-size: 1.15rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 40px;
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .hero-description i {
+            color: var(--gold);
+            font-size: 1.1rem;
         }
 
         /* --- BOTÕES --- */
@@ -155,7 +173,7 @@
             background: linear-gradient(135deg, #dfc495 0%, #bda06d 100%);
             color: #0b141d;
             padding: 14px 36px;
-            border-radius: 8px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
@@ -182,7 +200,7 @@
         }
 
         .section-title {
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             color: var(--gold-light);
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -196,12 +214,13 @@
         }
 
         .act-card {
-            background-color: var(--card-dark);
+            background-color: rgba(6, 18, 28, 0.85);
             border: 1px solid rgba(189, 160, 109, 0.12);
             border-radius: 12px;
             padding: 40px 30px;
             text-align: center;
             transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
         }
 
         .act-card:hover {
@@ -281,11 +300,11 @@
             filter: brightness(0.95);
         }
 
-        /* --- DEPOIMENTOS (6 CARDS COM FOTO CIRCULAR) --- */
+        /* --- DEPOIMENTOS (6 CARDS COM OVERLAP DE FOTO CIRCULAR) --- */
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 45px 25px; /* Maior espaçamento superior para acomodar o overlap da foto */
+            gap: 55px 25px; 
             margin-top: 40px;
         }
 
@@ -308,7 +327,7 @@
             top: -37px;
             left: 50%;
             transform: translateX(-50%);
-            border: 4px solid var(--bg); /* Corta visualmente o fundo escuro */
+            border: 4px solid #040e16; /* Corresponde ao fundo atrás do card */
             overflow: hidden;
         }
 
@@ -348,7 +367,7 @@
         }
 
         .faq-wrapper .faq-item {
-            background-color: var(--card-dark);
+            background-color: rgba(6, 18, 28, 0.8);
             border-bottom: 1px solid rgba(189, 160, 109, 0.15);
             margin-bottom: 10px;
         }
@@ -431,7 +450,7 @@
         .contact-link.wp { background-color: #1e874b; }
         .contact-link.ml { background-color: #243544; border: 1px solid rgba(255,255,255,0.05); }
 
-        /* --- FOOTER CARD BEGE --- */
+        /* --- FOOTER BEGE --- */
         footer {
             padding: 60px 0;
         }
@@ -499,10 +518,24 @@
             background-color: #0c2335;
         }
 
+        /* --- ANIMAÇÕES --- */
+        @keyframes floatStatue {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
         /* --- RESPONSIVIDADE --- */
         @media (max-width: 992px) {
-            .grid-3, .testimonials-grid, .faq-contact-grid, .footer-card, .about-grid {
+            .hero-grid, .grid-3, .testimonials-grid, .faq-contact-grid, .footer-card, .about-grid {
                 grid-template-columns: 1fr;
+            }
+            .hero-image-box {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            .hero-text-box {
+                align-items: center;
+                text-align: center;
             }
             .side-contact-box {
                 border-left: none;
@@ -523,25 +556,36 @@
 
 <body>
 
+    <!-- HERO SECTION -->
     <div class="hero-outer">
-        <section class="container hero-content">
-            <div class="main-logo-wrapper">
-                <div class="main-logo">LB</div>
+        <section class="container hero-grid">
+            <!-- Imagem da estátua posicionada à esquerda -->
+            <div class="hero-image-box">
+                <img src="estatua-justica.png" alt="Estátua da Justiça">
             </div>
-            
-            <h1 class="hero-title">Dra. Livia Borges</h1>
-            <div class="hero-subtitle">Advocacia e Consultoria Jurídica</div>
-            
-            <p class="hero-description">
-                "Estratégia, ética e excelência na defesa dos seus direitos fundamentais e resguardo de seu patrimônio legal."
-            </p>
-            
-            <a href="#contato" class="btn-gold">
-                <i class="fa-solid fa-calendar-days"></i> Agendar Consulta
-            </a>
+
+            <!-- Conteúdo de texto e logo posicionado à direita -->
+            <div class="hero-text-box">
+                <div class="main-logo-wrapper">
+                    <div class="main-logo">LB</div>
+                </div>
+                
+                <h1 class="hero-title">Dra. Livia Borges</h1>
+                <div class="hero-subtitle">Advocacia e Consultoria Jurídica</div>
+                
+                <div class="hero-description">
+                    <i class="fa-regular fa-square-check"></i>
+                    <span>Estratégia, ética e excelência na defesa dos seus direitos.</span>
+                </div>
+                
+                <a href="#contato" class="btn-gold">
+                    <i class="fa-solid fa-calendar-days"></i> Agendar Consulta
+                </a>
+            </div>
         </section>
     </div>
 
+    <!-- ÁREAS DE ATUAÇÃO -->
     <section>
         <div class="container">
             <div class="section-header">
@@ -555,7 +599,7 @@
                         <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <h3>Direito Penal</h3>
-                    <p>Defesa integral e especializada em inquéritos policiais, audiências de custódia, crimes de colarinho branco e atuação em todas as fases processuais.</p>
+                    <p>Defesa em inquéritos policiais, audiências, crimes de colarinho branco e crimes em geral, em todas as fases do processo.</p>
                 </div>
 
                 <div class="act-card">
@@ -563,7 +607,7 @@
                         <i class="fa-solid fa-users"></i>
                     </div>
                     <h3>Assessoria Jurídica</h3>
-                    <p>A assessoria preventiva oferece suporte especializado em questões legais complexas, mitigação analítica de riscos e tomadas de decisões corporativas eficazes.</p>
+                    <p>A assessoria jurídica oferece suporte especializado em questões legais, com foco na prevenção de riscos e na tomada de decisões seguras e eficazes.</p>
                 </div>
 
                 <div class="act-card">
@@ -571,7 +615,7 @@
                         <i class="fa-solid fa-gavel"></i>
                     </div>
                     <h3>Processos de Apelação</h3>
-                    <p>Atuação técnica e minuciosa no desenvolvimento de recursos em instâncias superiores, visando reverter decisões desfavoráveis através de teses consolidadas.</p>
+                    <p>Atuação em recursos e apelações com estratégia e técnica para reverter decisões e buscar o melhor resultado em instâncias superiores.</p>
                 </div>
             </div>
 
@@ -583,13 +627,14 @@
         </div>
     </section>
 
+    <!-- SOBRE A DOUTORA -->
     <section class="about-section">
         <div class="container about-grid">
             <div class="about-text">
                 <h2>Dra. Livia Borges</h2>
-                <p>Mais de 10 anos de experiência sólida em Direito Penal e Consultoria Empresarial, construindo uma trajetória pautada pela atuação estratégica e compromisso inegociável com as garantias fundamentais.</p>
-                <p>Minha formação continuada e especializações acadêmicas permitem a entrega de soluções jurídicas sob medida para casos de alta complexidade, operando com o mais absoluto sigilo, discrição e eficácia técnica.</p>
-                <p>Acredito firmemente que cada cliente possui uma narrativa única. Por isso, ofereço um atendimento centrado no respeito humano e na responsabilidade de uma defesa combativa.</p>
+                <p>Mais de 10 anos de experiência em Direito Penal, com atuação estratégica e comprometida com a defesa de direitos e garantias fundamentais.</p>
+                <p>Minha formação sólida e atualização constante me permitem oferecer soluções jurídicas eficazes e personalizadas para cada caso. Atuo com ética, discrição e dedicação, buscando sempre a melhor estratégia para alcançar justiça e resultados.</p>
+                <p>Meu compromisso é com pessoas, não apenas com processos. Cada história é única e merece ser tratada com respeito, atenção e responsabilidade.</p>
             </div>
             <div class="about-img-box">
                 <img src="foto-da-advogada.png" alt="Dra. Livia Borges">
@@ -597,6 +642,7 @@
         </div>
     </section>
 
+    <!-- DEPOIMENTOS (OS 6 COMPLETOS COM AVATAR) -->
     <section>
         <div class="container">
             <div class="section-header">
@@ -605,63 +651,70 @@
             </div>
 
             <div class="testimonials-grid">
+                <!-- Card 1 -->
                 <div class="testi-card">
                     <div class="avatar-circle">
                         <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=60" alt="Ana Costa">
                     </div>
                     <i class="fa-solid fa-quote-left quote-icon"></i>
-                    <p>"A Dra. Livia foi uma verdadeira defensora dos meus direitos. Sua abordagem estratégica e cuidadosa fez toda a diferença no desfecho favorável do meu caso."</p>
+                    <p>"A Dra. Livia foi uma verdadeira defensora dos meus direitos. Sua abordagem estratégica e cuidadosa fez toda a diferença no meu caso."</p>
                     <span class="testi-author">— Ana Costa, Empresária</span>
                 </div>
 
+                <!-- Card 2 -->
                 <div class="testi-card">
                     <div class="avatar-circle">
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=60" alt="Ricardo Lima">
                     </div>
                     <i class="fa-solid fa-quote-left quote-icon"></i>
-                    <p>"Obtive sucesso em uma situação corporativa complexa. Com argumentos sólidos e técnica impecável, a doutora alcançou um resultado excelente para nossa firma."</p>
+                    <p>"Obteve em uma situação muito complicada e com argumentos sólidos e técnica impecável, conseguiu um resultado excelente!"</p>
                     <span class="testi-author">— Ricardo Lima, Engenheiro</span>
                 </div>
 
+                <!-- Card 3 -->
                 <div class="testi-card">
                     <div class="avatar-circle">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=60" alt="Fernanda Soares">
                     </div>
                     <i class="fa-solid fa-quote-left quote-icon"></i>
-                    <p>"Profissionalismo, ética e muita dedicação prática. Recomendo os serviços jurídicos da Dra. Livia a todos que necessitam de uma defesa de alta confiança."</p>
+                    <p>"Profissionalismo, ética e muita dedicação. Recomendo a Dra. Livia a todos que precisam de uma defesa de confiança."</p>
                     <span class="testi-author">— Fernanda Soares, Médica</span>
                 </div>
 
+                <!-- Card 4 -->
                 <div class="testi-card">
                     <div class="avatar-circle">
                         <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=60" alt="Carlos Albuquerque">
                     </div>
                     <i class="fa-solid fa-quote-left quote-icon"></i>
-                    <p>"Desde o primeiro contato, senti que os negócios da minha família estavam em boas mãos. Uma excelente advogada que nos orientou com precisão cirúrgica."</p>
+                    <p>"Desde o início, senti que estava em boas mãos. Uma ótima advogada que me orientou em cada etapa do processo."</p>
                     <span class="testi-author">— Carlos Albuquerque, Diretor Financeiro</span>
                 </div>
 
+                <!-- Card 5 -->
                 <div class="testi-card">
                     <div class="avatar-circle">
                         <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=60" alt="Mariana Figueiredo">
                     </div>
                     <i class="fa-solid fa-quote-left quote-icon"></i>
-                    <p>"Não poderia ter escolhido assessoria melhor para o meu caso. Sua competência técnica e atenção contínua foram essenciais para mitigar os riscos envolvidos."</p>
+                    <p>"Não poderia ter escolhido uma defesa melhor. Sua competência e atenção foram essenciais para o desfecho positivo do meu caso."</p>
                     <span class="testi-author">— Mariana Figueiredo, Arquiteta</span>
                 </div>
 
+                <!-- Card 6 -->
                 <div class="testi-card">
                     <div class="avatar-circle">
                         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=60" alt="João Henrique">
                     </div>
                     <i class="fa-solid fa-quote-left quote-icon"></i>
-                    <p>"Sua atuação em juízo foi impecável, humana e ágil. Me manteve informado de forma transparente e absolutamente tranquilo durante todas as audiências do processo."</p>
+                    <p>"Sua atuação foi impecável e humana. Me manteve informado e tranquilo durante todo o processo."</p>
                     <span class="testi-author">— João Henrique, Empresário</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- PERGUNTAS FREQUENTES & CONTATO -->
     <section id="contato">
         <div class="container faq-contact-grid">
             
@@ -671,35 +724,35 @@
                 <div class="faq-item">
                     <button class="faq-trigger">Como funciona o processo de consulta jurídica? <span>+</span></button>
                     <div class="faq-content">
-                        <p>A consulta inicial serve para analisarmos detalhadamente os documentos, entender a fundo as particularidades do seu caso e traçar o plano estratégico mais viável.</p>
+                        <p>A consulta é personalizada para compreender o caso e orientar sobre as melhores estratégias jurídicas aplicáveis.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-trigger">Posso contratar um advogado durante uma investigação policial? <span>+</span></button>
                     <div class="faq-content">
-                        <p>Sim. O acompanhamento profissional desde a fase inicial de inquérito é fundamental para evitar arbitrariedades e garantir que seus direitos constitucionais não sejam violados.</p>
+                        <p>Sim. O acompanhamento jurídico desde o início das investigações é fundamental para garantir o respeito aos seus direitos fundamentais.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-trigger">Como posso acompanhar o andamento do meu processo? <span>+</span></button>
                     <div class="faq-content">
-                        <p>Nosso escritório fornece relatórios periódicos de movimentação e nossa equipe fica integralmente disponível para esclarecer o andamento processual de forma transparente.</p>
+                        <p>Nossa equipe mantém os clientes atualizados diretamente sobre cada andamento relevante e disponibiliza canais diretos para sanar dúvidas.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-trigger">Quanto tempo leva para resolver um processo criminal? <span>+</span></button>
                     <div class="faq-content">
-                        <p>O tempo total é variável e depende da complexidade da causa, número de testemunhas e da comarca judicial responsável pelo julgamento da ação.</p>
+                        <p>O prazo varia amplamente conforme a complexidade da denúncia, quantidade de instâncias e a própria agilidade do poder judiciário.</p>
                     </div>
                 </div>
             </div>
 
             <div class="side-contact-box">
                 <h3>Ficou com alguma dúvida?</h3>
-                <p>Entre em contato diretamente com o nosso atendimento exclusivo VIP e receba retorno ágil.</p>
+                <p>Entre em contato com o nosso atendimento VIP.</p>
                 
                 <a href="#" class="contact-link wp">
                     <i class="fa-brands fa-whatsapp"></i> Atendimento por WhatsApp
@@ -712,16 +765,17 @@
         </div>
     </section>
 
+    <!-- FOOTER BEGE CORRIGIDO -->
     <footer>
         <div class="container">
             <div class="footer-card">
                 <div class="footer-info-left">
                     <i class="fa-solid fa-calendar-check"></i>
-                    <p>Agende sua consulta e tenha uma defesa altamente estratégica ao seu lado.<br><span style="font-size: 0.85rem; font-weight: normal; opacity: 0.8;">Atendimento totalmente sigiloso e personalizado.</span></p>
+                    <p>Agende sua consulta e tenha uma defesa estratégica ao seu lado.<br><span style="font-size: 0.85rem; font-weight: normal; opacity: 0.8;">Atendimento sigiloso e personalizado.</span></p>
                 </div>
                 
                 <div class="footer-channels">
-                    <div><i class="fa-solid fa-phone"></i> (31) 99999-9999</div>
+                    <div><i class="fa-solid fa-phone"></i> (31) 98765-4321</div>
                     <div><i class="fa-solid fa-envelope"></i> <a href="mailto:contato@liviaborges.adv.br">contato@liviaborges.adv.br</a></div>
                     <div><i class="fa-solid fa-globe"></i> <a href="http://www.liviaborges.adv.br" target="_blank">www.liviaborges.adv.br</a></div>
                 </div>
@@ -734,13 +788,12 @@
     </footer>
 
     <script>
-        // Lógica do FAQ Accordion
+        // Lógica simples do FAQ Accordion
         document.querySelectorAll('.faq-trigger').forEach(trigger => {
             trigger.addEventListener('click', () => {
                 const item = trigger.parentElement;
                 const isActive = item.classList.contains('active');
                 
-                // Fecha outros abertos
                 document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
                 
                 if (!isActive) {
