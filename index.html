@@ -10,20 +10,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
         :root {
-            --bg: #06131d;
-            --bg-secondary: #0b1c28;
-            --card: rgba(13, 30, 42, 0.82);
-            --gold: #c9a16a;
-            --gold-light: #e4c08b;
-            --text: #f5f5f5;
-            --text-muted: #b7c0c9;
-            --border: rgba(201, 161, 106, 0.15);
+            --bg: #030a10;
+            --bg-secondary: #05101a;
+            --card-dark: #06121c;
+            --card-light: #ffffff;
+            --gold: #bda06d;
+            --gold-light: #e2cb9f;
+            --gold-dark: #8c7143;
+            --text-white: #ffffff;
+            --text-dark: #1c242c;
+            --text-muted: #94a3b1;
+            --border: rgba(189, 160, 109, 0.2);
         }
 
         * {
@@ -38,406 +40,482 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--text);
+            color: var(--text-white);
+            background-color: var(--bg);
             overflow-x: hidden;
-            background:
-                radial-gradient(circle at top left, rgba(11, 70, 98, 0.25), transparent 35%),
-                linear-gradient(180deg, #04111a 0%, #081722 100%);
+            position: relative;
         }
 
+        /* Textura sutil de fundo para simular o background premium da imagem */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background-image:
-                radial-gradient(rgba(201, 161, 106, 0.08) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-image: radial-gradient(rgba(189, 160, 109, 0.03) 1px, transparent 0px);
+            background-size: 24px 24px;
             pointer-events: none;
-            opacity: .3;
-            z-index: -1;
+            z-index: 1;
         }
 
         .container {
-            width: min(1180px, 92%);
+            width: min(1140px, 90%);
             margin: auto;
+            position: relative;
+            z-index: 2;
         }
 
         section {
-            padding: 90px 0;
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        .section-title {
-            text-align: center;
-            color: var(--gold);
-            font-size: 2.8rem;
-            margin-bottom: 60px;
-        }
-
-        .section-title::after {
-            content: "";
-            width: 100px;
-            height: 2px;
-            background: var(--gold);
-            display: block;
-            margin: 16px auto 0;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-image {
-            height: 680px;
+            padding: 100px 0;
             position: relative;
-            overflow: hidden;
-            transition: transform .6s ease;
         }
 
-        .hero-image::before {
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+        }
+
+        /* --- HERO SECTION COM ARCO INFERIOR --- */
+        .hero-outer {
+            position: relative;
+            background: linear-gradient(180deg, #02070b 0%, #061524 100%);
+            padding-bottom: 140px;
+            /* Recorte convexo inferior simulando o design da imagem */
+            clip-path: ellipse(140% 100% at 50% 0%);
+        }
+
+        /* Brilho dourado atrás do logo/estátua */
+        .hero-outer::after {
             content: "";
             position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, transparent 50%, rgba(6, 19, 29, .35) 100%);
-            z-index: 2;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(189, 160, 109, 0.08) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 35px 50px rgba(0, 0, 0, .5));
-            transition: transform 1s ease, filter 1s ease;
-            animation: floatImage 8s ease-in-out infinite;
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
         }
 
-        .hero-image:hover img {
-            transform: scale(1.05);
-            filter: drop-shadow(0 45px 60px rgba(0, 0, 0, .65));
-        }
-
-        .hero-text {
+        .main-logo-wrapper {
+            margin-bottom: 20px;
             position: relative;
         }
 
-        .logo {
-            color: var(--gold);
-            font-size: 4rem;
-            margin-bottom: 10px;
+        /* Espaço para o monograma estilizado IM / LB */
+        .main-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            color: var(--gold-light);
+            line-height: 1;
+            letter-spacing: -2px;
+            font-weight: 300;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
         }
 
-        .hero h1 {
-            font-size: 5rem;
-            line-height: .95;
-            margin-bottom: 15px;
+        .hero-title {
+            font-size: 3.5rem;
+            color: var(--text-white);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
         }
 
-        .subtitle {
-            color: var(--gold);
+        .hero-subtitle {
+            font-size: 0.95rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 40px;
+            font-weight: 500;
         }
 
-        .hero p {
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 600px;
             color: var(--text-muted);
-            line-height: 1.9;
-            font-size: 1.1rem;
-            max-width: 500px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
         }
 
-        .btn {
+        /* --- BOTÕES --- */
+        .btn-gold {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 35px;
-            padding: 16px 30px;
-            border-radius: 14px;
+            gap: 10px;
+            background: linear-gradient(135deg, #dfc495 0%, #bda06d 100%);
+            color: #0b141d;
+            padding: 14px 36px;
+            border-radius: 8px;
             text-decoration: none;
-            background: linear-gradient(135deg, var(--gold), var(--gold-light));
-            color: #1b1b1b;
-            font-weight: 700;
-            transition: all .4s ease;
-            box-shadow: 0 15px 30px rgba(201, 161, 106, .2);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(189, 160, 109, 0.15);
         }
 
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 45px rgba(201, 161, 106, .35);
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(189, 160, 109, 0.3);
+            background: linear-gradient(135deg, #bda06d 0%, #dfc495 100%);
+        }
+
+        /* --- ÁREAS DE ATUAÇÃO --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header i {
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(14px);
-            border-radius: 24px;
-            padding: 35px;
-            transition: all .4s ease;
+        .act-card {
+            background-color: var(--card-dark);
+            border: 1px solid rgba(189, 160, 109, 0.12);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(201, 161, 106, .4);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, .3);
+        .act-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
         }
 
-        .card i {
-            color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 20px;
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
         }
 
-        .card h3 {
-            font-size: 2rem;
+        .icon-circle i {
+            color: var(--gold-light);
+            font-size: 1.8rem;
+        }
+
+        .act-card h3 {
+            font-size: 1.8rem;
+            color: var(--text-white);
             margin-bottom: 15px;
         }
 
-        .card p {
+        .act-card p {
             color: var(--text-muted);
-            line-height: 1.8;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        .about {
-            background: rgba(255, 255, 255, .02);
+        .center-action {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        .about-content {
+        /* --- SEÇÃO SOBRE (ABOUT) --- */
+        .about-section {
+            background: radial-gradient(circle at right, rgba(5, 20, 34, 0.6) 0%, transparent 60%);
+        }
+
+        .about-grid {
             display: grid;
-            grid-template-columns: 1.1fr .9fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 60px;
             align-items: center;
         }
 
-        .about h2 {
-            color: var(--gold);
-            font-size: 3.2rem;
+        .about-text h2 {
+            font-size: 2.8rem;
+            color: var(--gold-light);
             margin-bottom: 25px;
         }
 
-        .about p {
+        .about-text p {
             color: var(--text-muted);
-            line-height: 1.9;
+            font-size: 1.05rem;
+            line-height: 1.8;
             margin-bottom: 20px;
         }
 
-        .about-image {
-            height: 520px;
-            overflow: hidden;
-            border-radius: 28px;
-            border: 1px solid var(--border);
+        .about-img-box {
             position: relative;
-            transition: all .5s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        .about-image::before {
-            content: "";
+        .about-img-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: brightness(0.95);
+        }
+
+        /* --- DEPOIMENTOS (6 CARDS COM FOTO CIRCULAR) --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 45px 25px; /* Maior espaçamento superior para acomodar o overlap da foto */
+            margin-top: 40px;
+        }
+
+        .testi-card {
+            background-color: var(--card-light);
+            color: var(--text-dark);
+            border-radius: 12px;
+            padding: 50px 30px 30px 30px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .avatar-circle {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #e6ebf0;
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(6, 19, 29, .4), transparent 50%);
-            z-index: 2;
-            pointer-events: none;
+            top: -37px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid var(--bg); /* Corta visualmente o fundo escuro */
+            overflow: hidden;
         }
 
-        .about-image img {
+        .avatar-circle img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform .8s ease;
         }
 
-        .about-image:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, .35);
-        }
-
-        .about-image:hover img {
-            transform: scale(1.08);
-        }
-
-        .testimonials {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .testimonial {
-            background: #fff;
-            color: #222;
-            border-radius: 22px;
-            padding: 30px;
-            transition: all .4s ease;
-        }
-
-        .testimonial:hover {
-            transform: translateY(-8px);
-        }
-
-        .testimonial i {
+        .testi-card .quote-icon {
             color: var(--gold);
+            font-size: 1.6rem;
             margin-bottom: 15px;
+            display: block;
         }
 
-        .testimonial p {
-            line-height: 1.7;
-            margin-bottom: 15px;
+        .testi-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4a5560;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
-        .faq-grid {
+        .testi-author {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: block;
+        }
+
+        /* --- FAQ & CONTATO --- */
+        .faq-contact-grid {
             display: grid;
-            grid-template-columns: 1.3fr .7fr;
-            gap: 30px;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
         }
 
-        .faq-item {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 15px;
+        .faq-wrapper .faq-item {
+            background-color: var(--card-dark);
+            border-bottom: 1px solid rgba(189, 160, 109, 0.15);
+            margin-bottom: 10px;
         }
 
-        .faq-question {
-            padding: 22px;
+        .faq-trigger {
+            width: 100%;
+            padding: 20px;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            text-align: left;
+            font-size: 1.05rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             cursor: pointer;
-            font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
 
-        .faq-answer {
+        .faq-trigger span {
+            color: var(--gold);
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-content {
             max-height: 0;
             overflow: hidden;
-            padding: 0 22px;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 20px;
             color: var(--text-muted);
-            transition: all .4s ease;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        .faq-item.active .faq-answer {
+        .faq-item.active .faq-content {
             max-height: 200px;
-            padding: 0 22px 22px;
+            padding-bottom: 20px;
         }
 
-        .contact-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 35px;
+        .faq-item.active .faq-trigger span {
+            transform: rotate(45deg);
         }
 
-        .contact-btn {
+        .side-contact-box {
+            background-color: transparent;
+            border-left: 1px solid rgba(189, 160, 109, 0.15);
+            padding-left: 40px;
+        }
+
+        .side-contact-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+
+        .side-contact-box p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .contact-link {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 18px;
-            margin-top: 18px;
-            border-radius: 12px;
+            padding: 16px 20px;
+            border-radius: 6px;
             text-decoration: none;
-            color: #fff;
-            transition: all .4s ease;
+            color: var(--text-white);
+            font-weight: 500;
+            margin-bottom: 15px;
+            transition: opacity 0.2s ease;
         }
 
-        .whatsapp {
-            background: #1f9d53;
+        .contact-link:hover {
+            opacity: 0.9;
         }
 
-        .email {
-            background: #203849;
-        }
+        .contact-link.wp { background-color: #1e874b; }
+        .contact-link.ml { background-color: #243544; border: 1px solid rgba(255,255,255,0.05); }
 
-        .contact-btn:hover {
-            transform: translateX(8px);
-        }
-
+        /* --- FOOTER CARD BEGE --- */
         footer {
-            padding: 40px 0;
+            padding: 60px 0;
         }
 
-        .footer-box {
-            background: linear-gradient(135deg, #d4af79, #c69b61);
-            color: #1d1d1d;
-            border-radius: 24px;
-            padding: 35px;
+        .footer-card {
+            background: linear-gradient(135deg, #e3cc9f 0%, #c1a473 100%);
+            border-radius: 16px;
+            padding: 40px;
+            color: var(--text-dark);
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: 1.2fr 1fr 0.8fr;
+            gap: 30px;
             align-items: center;
         }
 
-        .footer-btn {
+        .footer-info-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-info-left i {
+            font-size: 2.2rem;
+            color: #554121;
+        }
+
+        .footer-info-left p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #2a2010;
+        }
+
+        .footer-channels {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #3d301b;
+        }
+
+        .footer-channels i {
+            margin-right: 8px;
+            color: #554121;
+        }
+
+        .footer-channels a {
+            color: #3d301b;
+            text-decoration: none;
+        }
+
+        .btn-dark-footer {
+            background-color: #06131d;
+            color: var(--gold-light);
+            text-align: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease;
+            display: inline-block;
             justify-self: end;
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity .9s ease, transform .9s ease;
+        .btn-dark-footer:hover {
+            background-color: #0c2335;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @keyframes floatImage {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-12px);
-            }
-        }
-
+        /* --- RESPONSIVIDADE --- */
         @media (max-width: 992px) {
-
-            .hero-content,
-            .about-content,
-            .grid-3,
-            .testimonials,
-            .faq-grid,
-            .footer-box {
+            .grid-3, .testimonials-grid, .faq-contact-grid, .footer-card, .about-grid {
                 grid-template-columns: 1fr;
             }
-
-            .hero {
-                padding-top: 40px;
+            .side-contact-box {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 40px;
             }
-
-            .hero-image {
-                order: -1;
-                height: 450px;
-            }
-
-            .hero h1 {
-                font-size: 3.3rem;
-            }
-
-            .footer-btn {
+            .btn-dark-footer {
                 justify-self: start;
+            }
+            .about-img-box {
+                order: -1;
+                max-width: 450px;
+                margin: auto;
             }
         }
     </style>
@@ -445,249 +523,231 @@
 
 <body>
 
-    <section class="hero">
-
-        <div class="container hero-content">
-
-            <div class="hero-image reveal">
-                <img src="estatua-justica.png" alt="Estátua da Justiça">
+    <div class="hero-outer">
+        <section class="container hero-content">
+            <div class="main-logo-wrapper">
+                <div class="main-logo">LB</div>
             </div>
-
-            <div class="hero-text reveal">
-
-                <div class="logo">LB</div>
-
-                <h1>Dra. Livia Borges</h1>
-
-                <div class="subtitle">
-                    Advocacia e Consultoria Jurídica
-                </div>
-
-                <p>
-                    Estratégia, ética e excelência na defesa dos seus direitos.
-                </p>
-
-                <a href="#contato" class="btn">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    Agendar Consulta
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
+            
+            <h1 class="hero-title">Dra. Livia Borges</h1>
+            <div class="hero-subtitle">Advocacia e Consultoria Jurídica</div>
+            
+            <p class="hero-description">
+                "Estratégia, ética e excelência na defesa dos seus direitos fundamentais e resguardo de seu patrimônio legal."
+            </p>
+            
+            <a href="#contato" class="btn-gold">
+                <i class="fa-solid fa-calendar-days"></i> Agendar Consulta
+            </a>
+        </section>
+    </div>
 
     <section>
-
         <div class="container">
-
-            <h2 class="section-title reveal">Áreas de Atuação</h2>
+            <div class="section-header">
+                <h2 class="section-title">Áreas de Atuação</h2>
+                <i class="fa-solid fa-scale-balanced"></i>
+            </div>
 
             <div class="grid-3">
-
-                <div class="card reveal">
-                    <i class="fa-solid fa-building-columns"></i>
+                <div class="act-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
                     <h3>Direito Penal</h3>
-                    <p>Defesa em inquéritos policiais, audiências e atuação estratégica em todas as fases do processo.</p>
+                    <p>Defesa integral e especializada em inquéritos policiais, audiências de custódia, crimes de colarinho branco e atuação em todas as fases processuais.</p>
                 </div>
 
-                <div class="card reveal">
-                    <i class="fa-solid fa-users"></i>
+                <div class="act-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
                     <h3>Assessoria Jurídica</h3>
-                    <p>Suporte especializado para prevenção de riscos e tomada de decisões seguras.</p>
+                    <p>A assessoria preventiva oferece suporte especializado em questões legais complexas, mitigação analítica de riscos e tomadas de decisões corporativas eficazes.</p>
                 </div>
 
-                <div class="card reveal">
-                    <i class="fa-solid fa-scale-balanced"></i>
+                <div class="act-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-gavel"></i>
+                    </div>
                     <h3>Processos de Apelação</h3>
-                    <p>Atuação em recursos e apelações para buscar os melhores resultados.</p>
+                    <p>Atuação técnica e minuciosa no desenvolvimento de recursos em instâncias superiores, visando reverter decisões desfavoráveis através de teses consolidadas.</p>
                 </div>
-
             </div>
 
+            <div class="center-action">
+                <a href="#contato" class="btn-gold">
+                    <i class="fa-solid fa-calendar-days"></i> Agendar Consulta
+                </a>
+            </div>
         </div>
-
     </section>
 
-    <section class="about">
-
-        <div class="container about-content">
-
-            <div class="reveal">
-
+    <section class="about-section">
+        <div class="container about-grid">
+            <div class="about-text">
                 <h2>Dra. Livia Borges</h2>
-
-                <p>Mais de 10 anos de experiência em Direito Penal, com atuação estratégica e comprometida com a defesa dos direitos fundamentais.</p>
-
-                <p>Minha formação sólida e atualização constante me permitem oferecer soluções jurídicas eficazes e personalizadas.</p>
-
-                <p>Cada história é única e merece ser tratada com respeito, atenção e responsabilidade.</p>
-
+                <p>Mais de 10 anos de experiência sólida em Direito Penal e Consultoria Empresarial, construindo uma trajetória pautada pela atuação estratégica e compromisso inegociável com as garantias fundamentais.</p>
+                <p>Minha formação continuada e especializações acadêmicas permitem a entrega de soluções jurídicas sob medida para casos de alta complexidade, operando com o mais absoluto sigilo, discrição e eficácia técnica.</p>
+                <p>Acredito firmemente que cada cliente possui uma narrativa única. Por isso, ofereço um atendimento centrado no respeito humano e na responsabilidade de uma defesa combativa.</p>
             </div>
-
-            <div class="about-image reveal">
+            <div class="about-img-box">
                 <img src="foto-da-advogada.png" alt="Dra. Livia Borges">
             </div>
-
         </div>
-
     </section>
 
     <section>
-
         <div class="container">
-
-            <h2 class="section-title reveal">Depoimentos</h2>
-
-            <div class="testimonials">
-
-                <div class="testimonial reveal">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <p>"Profissional extremamente dedicada e atenciosa."</p>
-                    <strong>— Ana Costa</strong>
-                </div>
-
-                <div class="testimonial reveal">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <p>"Atuação impecável e resultados excelentes."</p>
-                    <strong>— Ricardo Lima</strong>
-                </div>
-
-                <div class="testimonial reveal">
-                    <i class="fa-solid fa-quote-left"></i>
-                    <p>"Recomendo a Dra. Livia para quem busca segurança jurídica."</p>
-                    <strong>— Fernanda Soares</strong>
-                </div>
-
+            <div class="section-header">
+                <h2 class="section-title">Depoimentos</h2>
+                <i class="fa-solid fa-quote-right"></i>
             </div>
 
-        </div>
+            <div class="testimonials-grid">
+                <div class="testi-card">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=60" alt="Ana Costa">
+                    </div>
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p>"A Dra. Livia foi uma verdadeira defensora dos meus direitos. Sua abordagem estratégica e cuidadosa fez toda a diferença no desfecho favorável do meu caso."</p>
+                    <span class="testi-author">— Ana Costa, Empresária</span>
+                </div>
 
+                <div class="testi-card">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=60" alt="Ricardo Lima">
+                    </div>
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p>"Obtive sucesso em uma situação corporativa complexa. Com argumentos sólidos e técnica impecável, a doutora alcançou um resultado excelente para nossa firma."</p>
+                    <span class="testi-author">— Ricardo Lima, Engenheiro</span>
+                </div>
+
+                <div class="testi-card">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=60" alt="Fernanda Soares">
+                    </div>
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p>"Profissionalismo, ética e muita dedicação prática. Recomendo os serviços jurídicos da Dra. Livia a todos que necessitam de uma defesa de alta confiança."</p>
+                    <span class="testi-author">— Fernanda Soares, Médica</span>
+                </div>
+
+                <div class="testi-card">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=60" alt="Carlos Albuquerque">
+                    </div>
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p>"Desde o primeiro contato, senti que os negócios da minha família estavam em boas mãos. Uma excelente advogada que nos orientou com precisão cirúrgica."</p>
+                    <span class="testi-author">— Carlos Albuquerque, Diretor Financeiro</span>
+                </div>
+
+                <div class="testi-card">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=60" alt="Mariana Figueiredo">
+                    </div>
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p>"Não poderia ter escolhido assessoria melhor para o meu caso. Sua competência técnica e atenção contínua foram essenciais para mitigar os riscos envolvidos."</p>
+                    <span class="testi-author">— Mariana Figueiredo, Arquiteta</span>
+                </div>
+
+                <div class="testi-card">
+                    <div class="avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=60" alt="João Henrique">
+                    </div>
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <p>"Sua atuação em juízo foi impecável, humana e ágil. Me manteve informado de forma transparente e absolutamente tranquilo durante todas as audiências do processo."</p>
+                    <span class="testi-author">— João Henrique, Empresário</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="contato">
-
-        <div class="container">
-
-            <h2 class="section-title reveal">Perguntas Frequentes</h2>
-
-            <div class="faq-grid">
-
-                <div class="reveal">
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            Como funciona a consulta jurídica?
-                            <span>+</span>
-                        </div>
-
-                        <div class="faq-answer">
-                            <p>A consulta é personalizada para compreender o caso e orientar sobre as melhores estratégias.</p>
-                        </div>
+        <div class="container faq-contact-grid">
+            
+            <div class="faq-wrapper">
+                <h2 style="font-size: 2.2rem; color: var(--gold-light); margin-bottom: 25px;">Perguntas Frequentes</h2>
+                
+                <div class="faq-item">
+                    <button class="faq-trigger">Como funciona o processo de consulta jurídica? <span>+</span></button>
+                    <div class="faq-content">
+                        <p>A consulta inicial serve para analisarmos detalhadamente os documentos, entender a fundo as particularidades do seu caso e traçar o plano estratégico mais viável.</p>
                     </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            Posso contratar um advogado durante uma investigação?
-                            <span>+</span>
-                        </div>
-
-                        <div class="faq-answer">
-                            <p>Sim. O acompanhamento jurídico desde o início é fundamental.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            Quanto tempo dura um processo?
-                            <span>+</span>
-                        </div>
-
-                        <div class="faq-answer">
-                            <p>O prazo varia conforme a complexidade e a instância judicial.</p>
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="contact-box reveal">
-
-                    <h3>Ficou com alguma dúvida?</h3>
-
-                    <a href="#" class="contact-btn whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        Atendimento via WhatsApp
-                    </a>
-
-                    <a href="#" class="contact-btn email">
-                        <i class="fa-regular fa-envelope"></i>
-                        Atendimento por E-mail
-                    </a>
-
+                <div class="faq-item">
+                    <button class="faq-trigger">Posso contratar um advogado durante uma investigação policial? <span>+</span></button>
+                    <div class="faq-content">
+                        <p>Sim. O acompanhamento profissional desde a fase inicial de inquérito é fundamental para evitar arbitrariedades e garantir que seus direitos constitucionais não sejam violados.</p>
+                    </div>
                 </div>
 
+                <div class="faq-item">
+                    <button class="faq-trigger">Como posso acompanhar o andamento do meu processo? <span>+</span></button>
+                    <div class="faq-content">
+                        <p>Nosso escritório fornece relatórios periódicos de movimentação e nossa equipe fica integralmente disponível para esclarecer o andamento processual de forma transparente.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-trigger">Quanto tempo leva para resolver um processo criminal? <span>+</span></button>
+                    <div class="faq-content">
+                        <p>O tempo total é variável e depende da complexidade da causa, número de testemunhas e da comarca judicial responsável pelo julgamento da ação.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-contact-box">
+                <h3>Ficou com alguma dúvida?</h3>
+                <p>Entre em contato diretamente com o nosso atendimento exclusivo VIP e receba retorno ágil.</p>
+                
+                <a href="#" class="contact-link wp">
+                    <i class="fa-brands fa-whatsapp"></i> Atendimento por WhatsApp
+                </a>
+                <a href="#" class="contact-link ml">
+                    <i class="fa-regular fa-envelope"></i> Atendimento por E-mail
+                </a>
             </div>
 
         </div>
-
     </section>
 
     <footer>
-
         <div class="container">
-
-            <div class="footer-box reveal">
-
-                <div>
-                    <strong>Agende sua consulta e tenha uma defesa estratégica ao seu lado.</strong>
+            <div class="footer-card">
+                <div class="footer-info-left">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <p>Agende sua consulta e tenha uma defesa altamente estratégica ao seu lado.<br><span style="font-size: 0.85rem; font-weight: normal; opacity: 0.8;">Atendimento totalmente sigiloso e personalizado.</span></p>
                 </div>
-
-                <div>
-                    (31) 99999-9999<br>
-                    contato@liviaborges.adv.br
+                
+                <div class="footer-channels">
+                    <div><i class="fa-solid fa-phone"></i> (31) 99999-9999</div>
+                    <div><i class="fa-solid fa-envelope"></i> <a href="mailto:contato@liviaborges.adv.br">contato@liviaborges.adv.br</a></div>
+                    <div><i class="fa-solid fa-globe"></i> <a href="http://www.liviaborges.adv.br" target="_blank">www.liviaborges.adv.br</a></div>
                 </div>
-
-                <a href="#" class="btn footer-btn">
-                    Agendar Consulta
+                
+                <a href="#contato" class="btn-dark-footer">
+                    <i class="fa-solid fa-calendar-days"></i> Agendar Consulta
                 </a>
-
             </div>
-
         </div>
-
     </footer>
 
     <script>
-        const reveals = document.querySelectorAll('.reveal');
-
-        function revealElements() {
-
-            reveals.forEach(item => {
-
-                const visible = window.innerHeight - 100;
-
-                if (item.getBoundingClientRect().top < visible) {
+        // Lógica do FAQ Accordion
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Fecha outros abertos
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                
+                if (!isActive) {
                     item.classList.add('active');
                 }
-
             });
-
-        }
-
-        window.addEventListener('scroll', revealElements);
-
-        revealElements();
-
-        document.querySelectorAll('.faq-question').forEach(item => {
-
-            item.addEventListener('click', () => {
-                item.parentElement.classList.toggle('active');
-            });
-
         });
     </script>
-
 </body>
-
 </html>
